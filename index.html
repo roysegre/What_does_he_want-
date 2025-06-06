@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דף נחיתה - חידת צבע החג</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #FFFFFF; /* White for success message */
+            --danger-color: #F44336; /* Red for error */
+            --text-color: #FFFFFF;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Rubik', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            overflow: hidden; /* Prevent scroll for animations */
+            position: relative;
+            background-color: #000; /* Default background is black */
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* שכבת מידע עליונה: קונטיינר הפאזל הראשי */
+        .puzzle-container {
+            position: relative;
+            z-index: 2; /* Ensures it's above any potential background (though none now) */
+            text-align: center;
+            padding: 20px;
+            max-width: 90%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+            transition: opacity 0.5s ease-in-out;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for content readability */
+            border-radius: 10px;
+            min-height: 50vh; /* Ensure it has some height even if content is small */
+        }
+
+        .puzzle-container h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .puzzle-container p {
+            font-size: 1em;
+            margin-bottom: 25px;
+        }
+
+        .puzzle-container input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .puzzle-container input#answerInput {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid var(--text-color);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 25px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .puzzle-container input#answerInput:focus {
+            border-color: #6a0dad; /* Purple focus border */
+        }
+
+        .puzzle-container button#submitButton {
+            background-color: #6a0dad; /* Purple button */
+            color: var(--text-color);
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        button#submitButton:hover {
+            background-color: #8c00b3; /* Darker
