@@ -37,7 +37,7 @@
             max-width: 90%;
             width: 100%; /* Ensure it takes available width */
             box-sizing: border-box;
-            display: flex;
+            display: flex; /* Changed to flex to center content */
             flex-direction: column;
             align-items: center;
             justify-content: center; /* Center content vertically within itself */
@@ -47,6 +47,10 @@
             border-radius: 10px;
             min-height: 70vh; /* Give it a more defined minimum height to be visible */
             margin: 20px auto; /* Add some margin from edges and center horizontally */
+            
+            /* **Important for initial visibility fix:** */
+            opacity: 1; 
+            display: flex; /* Default state should be visible and flex */
         }
 
         .puzzle-container img.header-image {
@@ -211,6 +215,12 @@
             border-radius: 10px;
         }
 
+        #successContent img.header-image-b { /* Style for b.jpg in success content */
+            max-width: 450px; /* Same size as a.jpg */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
         .color-info-row {
             display: flex;
             align-items: center;
@@ -280,7 +290,7 @@
                 text-align: center;
                 font-size: 1.1em;
             }
-            .puzzle-container img.header-image {
+            .puzzle-container img.header-image, #successContent img.header-image-b {
                 max-width: 300px; /* 100px * 3 = 300px */
             }
         }
@@ -309,7 +319,7 @@
             .color-info-row .numbers {
                 font-size: 0.9em;
             }
-            .puzzle-container img.header-image {
+            .puzzle-container img.header-image, #successContent img.header-image-b {
                 max-width: 240px; /* 80px * 3 = 240px */
             }
         }
@@ -326,6 +336,8 @@
     </div>
 
     <div id="successContent">
+        <img src="images/b.jpg" alt="Success image" class="header-image-b">
+
         <div class="color-info-row">
             <img src="images/black.jpg" alt="Black Color Icon">
             <span class="equal-sign">=</span>
@@ -339,8 +351,7 @@
         <div class="color-info-row">
             <img src="images/red.jpg" alt="Red Color Icon">
             <span class="equal-sign">=</span>
-            <span class="numbers">177, 204, 312, 445</span>
-        </div>
+            <span class="numbers">177, 204, 312, 339</span> </div>
         <div class="color-info-row">
             <img src="images/blue.jpg" alt="Blue Color Icon">
             <span class="equal-sign">=</span>
@@ -361,15 +372,15 @@
         const correctSound = document.getElementById('correctSound');
         const puzzleContainer = document.getElementById('puzzleContainer');
         const successContent = document.getElementById('successContent');
-        const headerImage = document.getElementById('headerImage');
+        const headerImage = document.getElementById('headerImage'); // This is a.jpg initially
 
         document.addEventListener('DOMContentLoaded', () => {
             console.log("DOM content loaded. Ensuring visibility.");
             document.body.style.backgroundColor = '#000'; // Ensure body background is black
 
-            // Explicitly ensure puzzle container is visible
-            puzzleContainer.style.display = 'flex'; // Make sure it's flex so content centers
-            puzzleContainer.style.opacity = 1; // Make sure it's fully opaque
+            // Explicitly ensure puzzle container is visible from the start
+            puzzleContainer.style.display = 'flex'; 
+            puzzleContainer.style.opacity = 1; 
 
             // Preload sounds to avoid delay on first play
             wrongSound.load();
@@ -381,6 +392,8 @@
             console.log("Creating star burst effect.");
             const numParticles = 30;
             const colors = ['#FFF', '#FFD700', '#FFC0CB']; // White, Gold, Pink
+            // Clear existing particles before creating new ones to prevent accumulation
+            starBurstContainer.innerHTML = ''; 
             for (let i = 0; i < numParticles; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('star-particle');
@@ -393,9 +406,13 @@
                 particle.style.animationDelay = `${Math.random() * 0.5}s`;
                 starBurstContainer.appendChild(particle);
             }
+            // Add a timeout to remove particles after their animation ends
+            setTimeout(() => {
+                clearStarBurst();
+            }, 2000); // Should be slightly longer than star-sparkle animation (1.5s)
         }
 
-        // פונקציה לניקוי חלקיקי הכוכבים
+        // פונקציה לניקוי חלקיקי הכוכבים (Used by createStarBurst now)
         function clearStarBurst() {
             console.log("Clearing star burst effect.");
             starBurstContainer.innerHTML = '';
@@ -411,17 +428,17 @@
             if (isCorrect) {
                 resultMessage.classList.add('success');
                 correctSound.play().catch(e => console.error("Error playing correct sound:", e));
-                createStarBurst();
+                createStarBurst(); // Trigger star burst
                 
-                // Change header image to b.jpg
-                headerImage.src = 'images/b.jpg'; 
+                // --- REMOVED: headerImage.src = 'images/b.jpg';  ---
+                // b.jpg is now part of successContent HTML, not replacing a.jpg
 
-                // הסתרת אלמנטי הפאזל הקודמים
+                // הסתרת אלמנטי הפאזל הקודמים (המכל הראשי)
                 puzzleContainer.style.opacity = 0;
                 puzzleContainer.style.pointerEvents = 'none'; // Make puzzle not clickable
 
                 setTimeout(() => {
-                    puzzleContainer.style.display = 'none'; // Fully hide
+                    puzzleContainer.style.display = 'none'; // Fully hide after transition
 
                     // הצגת התוכן החדש
                     successContent.style.display = 'flex'; // Show success content
@@ -442,12 +459,9 @@
                 }, 500);
             }
 
-            // Hide the result message after a duration, but keep new content if correct
+            // Hide the result message after a duration
             setTimeout(() => {
                 resultMessage.style.display = 'none';
-                if (isCorrect) {
-                    clearStarBurst(); // Clear stars after a while
-                }
             }, isCorrect ? 6000 : 3000); // Longer display for success message
         }
 
@@ -457,20 +471,20 @@
             const userAnswer = answerInput.value.trim().toLowerCase();
             const correctFullAnswer = "להאיץ באופן רחב";
             
-            // Normalize for comparison
-            const normalizedUserAnswer = userAnswer.replace(/\s+/g, ' '); // Replace multiple spaces with single space
-            const normalizedCorrectFullAnswer = correctFullAnswer.replace(/\s+/g, ' ');
+            // Normalize for comparison (replace multiple spaces with single, trim)
+            const normalizedUserAnswer = userAnswer.replace(/\s+/g, ' ').toLowerCase();
+            const normalizedCorrectFullAnswer = correctFullAnswer.replace(/\s+/g, ' ').toLowerCase();
 
             if (normalizedUserAnswer === normalizedCorrectFullAnswer) {
-                showResult("תשובה נכונה! המנעול נפתח! גזור את האזיקון", true); // Updated success message
+                showResult("תשובה נכונה! המנעול נפתח! גזור את האזיקון", true);
             } else if (
                 normalizedUserAnswer.includes("להאיץ") ||
                 normalizedUserAnswer.includes("באופן") ||
                 normalizedUserAnswer.includes("רחב")
             ) {
-                showResult("תשובה חלקית, נסה שוב", false); // Partial answer
+                showResult("תשובה חלקית, נסה שוב", false);
             } else {
-                showResult("תשובה שגויה!", false); // Incorrect answer
+                showResult("תשובה שגויה!", false);
             }
         });
 
