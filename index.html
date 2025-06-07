@@ -30,34 +30,34 @@
 
         /* קונטיינר הפאזל הראשי - כעת האלמנט המרכזי היחיד */
         .puzzle-container {
-            position: relative; /* Essential for z-index and positioning internal elements */
-            z-index: 2; /* Ensures it's above everything else except star burst */
+            position: relative; 
+            z-index: 2; 
             text-align: center;
             padding: 20px;
             max-width: 90%;
-            width: 100%; /* Ensure it takes available width */
+            width: 100%; 
             box-sizing: border-box;
-            display: flex; /* Changed to flex to center content */
+            display: flex; 
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center content vertically within itself */
-            flex-grow: 1; /* Allow it to grow and take space */
+            justify-content: center; 
+            flex-grow: 1; 
             transition: opacity 0.5s ease-in-out;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for content readability */
+            background-color: rgba(0, 0, 0, 0.5); 
             border-radius: 10px;
-            min-height: 70vh; /* Give it a more defined minimum height to be visible */
-            margin: 20px auto; /* Add some margin from edges and center horizontally */
+            min-height: 70vh; 
+            margin: 20px auto; 
             
-            /* **Important for initial visibility fix:** */
+            /* Initial visibility */
             opacity: 1; 
-            display: flex; /* Default state should be visible and flex */
+            display: flex; 
         }
 
         .puzzle-container img.header-image {
             max-width: 450px; /* 150px * 3 = 450px */
             height: auto;
             margin-bottom: 20px;
-            transition: src 0.3s ease-in-out; /* Smooth transition for image change */
+            transition: src 0.3s ease-in-out; 
         }
 
         .puzzle-container h1 {
@@ -93,11 +93,11 @@
         }
 
         .puzzle-container input#answerInput:focus {
-            border-color: #6a0dad; /* Purple focus border */
+            border-color: #6a0dad; 
         }
 
         .puzzle-container button#submitButton {
-            background-color: #6a0dad; /* Purple button */
+            background-color: #6a0dad; 
             color: var(--text-color);
             padding: 15px 30px;
             font-size: 1.2em;
@@ -113,7 +113,7 @@
         }
 
         button#submitButton:hover {
-            background-color: #8c00b3; /* Darker purple on hover */
+            background-color: #8c00b3; 
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(106, 13, 173, 0.6);
         }
@@ -128,16 +128,16 @@
             font-size: 1.8em;
             font-weight: 700;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            display: none; /* Hidden by default */
+            display: none; 
             color: var(--text-color);
             z-index: 10;
         }
 
         .result-message.error {
-            color: var(--danger-color); /* Red for error */
+            color: var(--danger-color); 
         }
         .result-message.success {
-            color: var(--primary-color); /* White for success */
+            color: var(--primary-color); 
         }
 
         /* Animations */
@@ -151,350 +151,3 @@
         }
 
         .shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-            transform: translate3d(0, 0, 0); /* Ensures smooth animation */
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
-
-        .star-burst-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Allows clicks to pass through */
-            overflow: hidden;
-            z-index: 9999; /* On top of everything */
-        }
-
-        .star-particle {
-            position: absolute;
-            background-color: #FFF;
-            border-radius: 50%;
-            opacity: 0;
-            animation: star-sparkle 1.5s forwards; /* Animation for individual stars */
-        }
-
-        @keyframes star-sparkle {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0);
-            }
-            20% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-        }
-
-        /* סגנונות לתוכן שיוצג לאחר תשובה נכונה */
-        #successContent {
-            display: none; /* Hidden by default */
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: var(--text-color);
-            font-size: 1.5em;
-            font-weight: 700;
-            line-height: 1.6;
-            transition: opacity 0.5s ease-in-out;
-            padding: 20px;
-            box-sizing: border-box;
-            max-width: 800px;
-            width: 100%;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            min-height: 100vh;
-            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
-            border-radius: 10px;
-        }
-
-        #successContent img.header-image-b { /* Style for b.jpg in success content */
-            max-width: 450px; /* Same size as a.jpg */
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .color-info-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap; /* Allows items to wrap on smaller screens */
-            width: 100%; /* Ensure row takes full width for wrapping */
-        }
-
-        .color-info-row img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin-inline-end: 15px; /* Margin for right-to-left layout */
-            vertical-align: middle;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-
-        .color-info-row .equal-sign {
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-inline-end: 15px; /* Margin for right-to-left layout */
-            vertical-align: middle;
-        }
-
-        .color-info-row .numbers {
-            font-size: 1.2em;
-            font-weight: 400;
-            vertical-align: middle;
-            text-align: start;
-            direction: ltr; /* Ensure numbers are left-to-right */
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px 10px; /* Spacing between numbers */
-            justify-content: flex-start;
-        }
-
-        /* מדיה קווארי למסכים קטנים יותר */
-        @media (max-width: 768px) {
-            .puzzle-container h1, #successContent h1 { /* Apply to h1 in successContent too */
-                font-size: 1.5em;
-            }
-            .puzzle-container p {
-                font-size: 0.9em;
-            }
-            .puzzle-container input#answerInput, .puzzle-container button#submitButton {
-                font-size: 1em;
-            }
-            .color-info-row {
-                flex-direction: column; /* Stack items vertically */
-                align-items: center;
-            }
-            .color-info-row img {
-                margin-inline-end: 0;
-                margin-bottom: 10px;
-                width: 70px;
-                height: 70px;
-            }
-            .color-info-row .equal-sign {
-                margin-inline-end: 0;
-                margin-bottom: 5px;
-                font-size: 1.3em;
-            }
-            .color-info-row .numbers {
-                justify-content: center;
-                text-align: center;
-                font-size: 1.1em;
-            }
-            .puzzle-container img.header-image, #successContent img.header-image-b {
-                max-width: 300px; /* 100px * 3 = 300px */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .puzzle-container h1, #successContent h1 {
-                font-size: 1.2em;
-            }
-            .puzzle-container p {
-                font-size: 0.8em;
-            }
-            .puzzle-container input#answerInput, .puzzle-container button#submitButton {
-                padding: 10px;
-                font-size: 0.9em;
-            }
-            .result-message {
-                font-size: 1.2em;
-            }
-            .color-info-row img {
-                width: 50px;
-                height: 50px;
-            }
-            .color-info-row .equal-sign {
-                font-size: 1em;
-            }
-            .color-info-row .numbers {
-                font-size: 0.9em;
-            }
-            .puzzle-container img.header-image, #successContent img.header-image-b {
-                max-width: 240px; /* 80px * 3 = 240px */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="puzzle-container" id="puzzleContainer">
-        <img src="images/a.jpg" alt="Initial image for puzzle" class="header-image" id="headerImage">
-        <h1>מה בדיוק הוא רוצה?</h1>
-        <p>הקלד את תשובתך פה:</p>
-        <input type="text" id="answerInput" placeholder="הכנס תשובה">
-        <button id="submitButton">זאת התשובה, אני בטוח!</button>
-        <div id="resultMessage" class="result-message"></div>
-    </div>
-
-    <div id="successContent">
-        <img src="images/b.jpg" alt="Success image" class="header-image-b">
-
-        <div class="color-info-row">
-            <img src="images/black.jpg" alt="Black Color Icon">
-            <span class="equal-sign">=</span>
-            <span class="numbers">112, 220</span>
-        </div>
-        <div class="color-info-row">
-            <img src="images/white.jpg" alt="White Color Icon">
-            <span class="equal-sign">=</span>
-            <span class="numbers">67, 94, 418, 445</span>
-        </div>
-        <div class="color-info-row">
-            <img src="images/red.jpg" alt="Red Color Icon">
-            <span class="equal-sign">=</span>
-            <span class="numbers">177, 204, 312, 339</span> </div>
-        <div class="color-info-row">
-            <img src="images/blue.jpg" alt="Blue Color Icon">
-            <span class="equal-sign">=</span>
-            <span class="numbers">51, 78, 322</span>
-        </div>
-    </div>
-
-    <div class="star-burst-container" id="starBurstContainer"></div>
-    <audio id="wrongSound" src="audio/wrong_sound.mp3" preload="auto"></audio>
-    <audio id="correctSound" src="audio/correct_sound.mp3" preload="auto"></audio>
-
-    <script>
-        const answerInput = document.getElementById('answerInput');
-        const submitButton = document.getElementById('submitButton');
-        const resultMessage = document.getElementById('resultMessage');
-        const starBurstContainer = document.getElementById('starBurstContainer');
-        const wrongSound = document.getElementById('wrongSound');
-        const correctSound = document.getElementById('correctSound');
-        const puzzleContainer = document.getElementById('puzzleContainer');
-        const successContent = document.getElementById('successContent');
-        const headerImage = document.getElementById('headerImage'); // This is a.jpg initially
-
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM content loaded. Ensuring visibility.");
-            document.body.style.backgroundColor = '#000'; // Ensure body background is black
-
-            // Explicitly ensure puzzle container is visible from the start
-            puzzleContainer.style.display = 'flex'; 
-            puzzleContainer.style.opacity = 1; 
-
-            // Preload sounds to avoid delay on first play
-            wrongSound.load();
-            correctSound.load();
-        });
-        
-        // פונקציה ליצירת חלקיקי כוכבים/נצנצים
-        function createStarBurst() {
-            console.log("Creating star burst effect.");
-            const numParticles = 30;
-            const colors = ['#FFF', '#FFD700', '#FFC0CB']; // White, Gold, Pink
-            // Clear existing particles before creating new ones to prevent accumulation
-            starBurstContainer.innerHTML = ''; 
-            for (let i = 0; i < numParticles; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('star-particle');
-                // Particles burst from center
-                particle.style.left = `calc(50% + ${(Math.random() - 0.5) * 60}vw)`;
-                particle.style.top = `calc(50% + ${(Math.random() - 0.5) * 60}vh)`;
-                particle.style.width = `${Math.random() * 8 + 4}px`;
-                particle.style.height = particle.style.width;
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.animationDelay = `${Math.random() * 0.5}s`;
-                starBurstContainer.appendChild(particle);
-            }
-            // Add a timeout to remove particles after their animation ends
-            setTimeout(() => {
-                clearStarBurst();
-            }, 2000); // Should be slightly longer than star-sparkle animation (1.5s)
-        }
-
-        // פונקציה לניקוי חלקיקי הכוכבים (Used by createStarBurst now)
-        function clearStarBurst() {
-            console.log("Clearing star burst effect.");
-            starBurstContainer.innerHTML = '';
-        }
-
-        // פונקציה להצגת הודעת תוצאה ויישום אפקטים
-        function showResult(message, isCorrect) {
-            console.log(`Showing result: "${message}", isCorrect: ${isCorrect}`);
-            resultMessage.textContent = message;
-            resultMessage.style.display = 'block';
-            resultMessage.classList.remove('error', 'success');
-
-            if (isCorrect) {
-                resultMessage.classList.add('success');
-                correctSound.play().catch(e => console.error("Error playing correct sound:", e));
-                createStarBurst(); // Trigger star burst
-                
-                // --- REMOVED: headerImage.src = 'images/b.jpg';  ---
-                // b.jpg is now part of successContent HTML, not replacing a.jpg
-
-                // הסתרת אלמנטי הפאזל הקודמים (המכל הראשי)
-                puzzleContainer.style.opacity = 0;
-                puzzleContainer.style.pointerEvents = 'none'; // Make puzzle not clickable
-
-                setTimeout(() => {
-                    puzzleContainer.style.display = 'none'; // Fully hide after transition
-
-                    // הצגת התוכן החדש
-                    successContent.style.display = 'flex'; // Show success content
-                    successContent.style.opacity = 1;
-                    console.log("Transitioned to success content.");
-                }, 500); // Wait for opacity transition
-
-            } else {
-                resultMessage.classList.add('error');
-                document.body.classList.add('shake'); // Add shake animation
-                wrongSound.play().catch(e => console.error("Error playing wrong sound:", e));
-                if (navigator.vibrate) { // Vibrate for haptic feedback on mobile
-                    navigator.vibrate(200);
-                }
-                setTimeout(() => {
-                    document.body.classList.remove('shake'); // Remove shake after animation
-                    console.log("Shake animation removed.");
-                }, 500);
-            }
-
-            // Hide the result message after a duration
-            setTimeout(() => {
-                resultMessage.style.display = 'none';
-            }, isCorrect ? 6000 : 3000); // Longer display for success message
-        }
-
-        // טיפול בלחיצה על כפתור השליחה
-        submitButton.addEventListener('click', () => {
-            console.log("Submit button clicked.");
-            const userAnswer = answerInput.value.trim().toLowerCase();
-            const correctFullAnswer = "להאיץ באופן רחב";
-            
-            // Normalize for comparison (replace multiple spaces with single, trim)
-            const normalizedUserAnswer = userAnswer.replace(/\s+/g, ' ').toLowerCase();
-            const normalizedCorrectFullAnswer = correctFullAnswer.replace(/\s+/g, ' ').toLowerCase();
-
-            if (normalizedUserAnswer === normalizedCorrectFullAnswer) {
-                showResult("תשובה נכונה! המנעול נפתח! גזור את האזיקון", true);
-            } else if (
-                normalizedUserAnswer.includes("להאיץ") ||
-                normalizedUserAnswer.includes("באופן") ||
-                normalizedUserAnswer.includes("רחב")
-            ) {
-                showResult("תשובה חלקית, נסה שוב", false);
-            } else {
-                showResult("תשובה שגויה!", false);
-            }
-        });
-
-        // מאפשר לחיצה על Enter לשליחת התשובה
-        answerInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                console.log("Enter key pressed.");
-                submitButton.click(); // Trigger button click on Enter
-            }
-        });
-    </script>
-</body>
-</html>
