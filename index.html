@@ -18,20 +18,19 @@
             font-family: 'Rubik', sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            justify-content: center; /* Center content vertically */
+            align-items: center;     /* Center content horizontally */
+            min-height: 100vh;       /* Full viewport height */
             color: var(--text-color);
-            overflow: hidden; /* Prevent scroll for animations */
-            position: relative;
-            background-color: #000; /* Default background is black */
-            width: 100vw;
-            height: 100vh;
+            overflow: hidden;        /* Prevent scroll for animations */
+            background-color: #000;  /* Explicitly black background for the body */
+            width: 100vw;            /* Full viewport width */
+            height: 100vh;           /* Full viewport height */
         }
 
-        /* שכבת מידע עליונה: קונטיינר הפאזל הראשי */
+        /* קונטיינר הפאזל הראשי - כעת האלמנט המרכזי היחיד */
         .puzzle-container {
-            position: relative; /* Changed to relative for simpler flow, or keep as is if z-index is needed */
+            position: relative; /* Essential for z-index and positioning internal elements */
             z-index: 2; /* Ensures it's above everything else except star burst */
             text-align: center;
             padding: 20px;
@@ -41,13 +40,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center content vertically */
+            justify-content: center; /* Center content vertically within itself */
             flex-grow: 1; /* Allow it to grow and take space */
             transition: opacity 0.5s ease-in-out;
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for content readability */
             border-radius: 10px;
             min-height: 70vh; /* Give it a more defined minimum height to be visible */
-            margin: 20px; /* Add some margin from edges */
+            margin: 20px auto; /* Add some margin from edges and center horizontally */
         }
 
         .puzzle-container img.header-image {
@@ -365,8 +364,13 @@
         const headerImage = document.getElementById('headerImage'); // Get the new image element
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM content loaded.");
-            document.body.style.backgroundColor = '#000'; // Ensure background is black
+            console.log("DOM content loaded. Ensuring visibility.");
+            document.body.style.backgroundColor = '#000'; // Ensure body background is black
+
+            // Explicitly ensure puzzle container is visible
+            puzzleContainer.style.display = 'flex'; // Make sure it's flex so content centers
+            puzzleContainer.style.opacity = 1; // Make sure it's fully opaque
+
             // Preload sounds to avoid delay on first play
             wrongSound.load();
             correctSound.load();
@@ -435,38 +439,4 @@
                 setTimeout(() => {
                     document.body.classList.remove('shake'); // Remove shake after animation
                     console.log("Shake animation removed.");
-                }, 500);
-            }
-
-            // Hide the result message after a duration, but keep new content if correct
-            setTimeout(() => {
-                resultMessage.style.display = 'none';
-                if (isCorrect) {
-                    clearStarBurst(); // Clear stars after a while
-                }
-            }, isCorrect ? 6000 : 3000); // Longer display for success message
-        }
-
-        // טיפול בלחיצה על כפתור השליחה
-        submitButton.addEventListener('click', () => {
-            console.log("Submit button clicked.");
-            const userAnswer = answerInput.value.trim().toLowerCase();
-            const correctAnswers = ["לבן", "white"]; // Both Hebrew and English "white"
-
-            if (correctAnswers.includes(userAnswer)) {
-                showResult("תשובה נכונה! המנעול נפתח! גזור את האזיקון", true); // Updated success message
-            } else {
-                showResult("תשובה שגויה!", false);
-            }
-        });
-
-        // מאפשר לחיצה על Enter לשליחת התשובה
-        answerInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                console.log("Enter key pressed.");
-                submitButton.click(); // Trigger button click on Enter
-            }
-        });
-    </script>
-</body>
-</html>
+                }, 500
